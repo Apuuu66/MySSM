@@ -1,11 +1,11 @@
-package util.config.parse;
+package ioc.config.parse;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import util.config.Bean;
-import util.config.BeanProperty;
+import ioc.config.Bean;
+import ioc.config.BeanProperty;
 
 import java.io.File;
 import java.util.HashMap;
@@ -67,12 +67,9 @@ public class ConfigManager {
                 if (children != null) {
                     for (Element child : children) {
                         BeanProperty prop = new BeanProperty();
-                        String name = child.attributeValue("name");
-                        String value = child.attributeValue("value");
-                        String ref = child.attributeValue("ref");
-                        prop.setName(name);
-                        prop.setValue(value);
-                        prop.setRef(ref);
+                        prop.setName(child.attributeValue("name"));
+                        prop.setValue(child.attributeValue("value"));
+                        prop.setRef(child.attributeValue("ref"));
                         // 将property封装到bean
                         bean.getProperties().add(prop);
                         // 将bean封装到map

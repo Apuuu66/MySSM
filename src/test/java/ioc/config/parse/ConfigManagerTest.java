@@ -1,11 +1,9 @@
-package util.config.parse;
+package ioc.config.parse;
 
+import ioc.config.Bean;
 import org.junit.Test;
-import util.config.Bean;
 
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Kevin on 2018/8/17.

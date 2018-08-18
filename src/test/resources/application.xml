@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-    <bean id="hostess" class="spring.achieve.Animal">
-        <property name="userName" value="admin"/>
+    <bean id="a" class="testBean.AAA">
+        <property name="name" value="admin"/>
+        <property name="bbb" ref="b"/>
     </bean>
-    <bean id="123" class="spring.achieve.Animal">
-        <property name="zhangsan" value="user"/>
+    <bean id="b" class="testBean.BBB">
+        <property name="name" value="WoshiB"/>
     </bean>
-
 </beans>

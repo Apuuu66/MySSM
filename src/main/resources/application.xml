@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 
-    <bean id="hostess" class="spring.achieve.Animal">
-        <property name="userName" value="admin"/>
+    <bean id="a" class="testBean.AAA">
+        <property name="name" value="admin"/>
     </bean>
-    <bean id="ttt" class="spring.achieve.Animal">
-        <property name="zhangsan" value="user"/>
-    </bean>
-
 </beans>
