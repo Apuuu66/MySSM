@@ -3,7 +3,8 @@ package ioc.factory;
 import ioc.config.Bean;
 import ioc.config.BeanProperty;
 import ioc.config.parse.ConfigManager;
-import ioc.utils.BeanUtils;
+import ioc.utils.MyBeanUtils;
+import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -55,14 +56,50 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
             e.printStackTrace();
             throw new RuntimeException("目前仅支持空参构造，请检查你的bean" + className);
         }
-        // 注入属性
+        //****** 注入属性********
         List<BeanProperty> properties = bean.getProperties();
         if (properties != null) {
             for (BeanProperty prop : properties) {
+
                 String name = prop.getName();
-                String parm = null;
+                String value = prop.getValue();
+                String ref = prop.getRef();
+                if (value != null) {
+                    HashMap<String, String[]> paramMap = new HashMap<>();
+                    paramMap.put(name, new String[]{value});
+                    try {
+                        // 使用BeanUtils工具进行属性注入(基本类型)
+                        BeanUtils.populate(beanObj, paramMap);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (ref != null) {
+                    Method setMethod = MyBeanUtils.getWriteMethod(beanObj, name);
+                    Object exitBean = context.get(ref);
+                    if (exitBean == null) {
+                        exitBean = creatBean(config.get(ref));
+                        if (config.get(ref).getScope().equals("singleton")) {
+                            context.put(ref, exitBean);
+                        }
+                    }
+
+                    try {
+                        setMethod.invoke(beanObj, exitBean);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("您的bean属性" + name + "没有对应的set方法" + className);
+                    }
+                }
+
+
+
+            /*    String parm = null;
                 //获取注入方法
-                Method setMethod = BeanUtils.getWriteMethod(beanObj, name);
+                Method setMethod = MyBeanUtils.getWriteMethod(beanObj, name);
                 String ref = prop.getRef();
 
                 if ((parm = prop.getValue()) != null) {
@@ -91,8 +128,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
                     }
 
                 }
-
-
+*/
             }
         }
         return beanObj;

@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 /**
  * Created by Kevin on 2018/8/18.
  */
-public class BeanUtils {
+public class MyBeanUtils {
     public static Method getWriteMethod(Object beanObj, String name) {
         Method method = null;
         try {

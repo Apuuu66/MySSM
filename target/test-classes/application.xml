@@ -4,6 +4,7 @@
     <bean id="a" class="testBean.AAA">
         <property name="name" value="admin"/>
         <property name="bbb" ref="b"/>
+        <property name="age" value="18"/>
     </bean>
 
     <bean id="b" class="testBean.BBB" scope="prototype">
