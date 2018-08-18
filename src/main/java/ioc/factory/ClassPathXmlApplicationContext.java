@@ -29,7 +29,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
                 String beanId = beanEntry.getKey();
                 Bean bean = beanEntry.getValue();
                 Object exitBean = context.get(beanId);
-                if (exitBean == null) {
+                if (exitBean == null && bean.getScope().equals("singleton")) {
                     // 装载bean
                     Object beanObj = creatBean(bean);
                     context.put(beanId, beanObj);
@@ -78,7 +78,9 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
                     Object exitBean = context.get(ref);
                     if (exitBean == null) {
                         exitBean = creatBean(config.get(ref));
-                        context.put(ref, exitBean);
+                        if (config.get(ref).getScope().equals("singleton")) {
+                            context.put(ref, exitBean);
+                        }
                     }
 
                     try {
@@ -98,6 +100,10 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
 
     @Override
     public Object getBean(String beanId) {
-        return context.get(beanId);
+        Object bean = context.get(beanId);
+        if (bean == null) {
+            bean = creatBean(config.get(beanId));
+        }
+        return bean;
     }
 }

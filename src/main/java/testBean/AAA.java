@@ -11,6 +11,10 @@ public class AAA {
     private Integer age;
     private BBB bbb;
 
+    public AAA() {
+        System.out.println("A被创建了");
+    }
+
     public BBB getBbb() {
         return bbb;
     }

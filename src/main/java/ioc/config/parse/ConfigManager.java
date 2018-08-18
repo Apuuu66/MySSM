@@ -60,8 +60,12 @@ public class ConfigManager {
                 Bean bean = new Bean();
                 String id = element.attributeValue("id");
                 String className = element.attributeValue("class");
+                String scope = element.attributeValue("scope");
                 bean.setId(id);
                 bean.setClazz(className);
+                if (scope != null) {
+                    bean.setScope(scope);
+                }
                 // 将bean元素下的property子元素的name，value，ref封装到property对象
                 List<Element> children = element.elements("property");
                 if (children != null) {
@@ -72,9 +76,10 @@ public class ConfigManager {
                         prop.setRef(child.attributeValue("ref"));
                         // 将property封装到bean
                         bean.getProperties().add(prop);
-                        // 将bean封装到map
-                        map.put(id, bean);
                     }
+                    // 将bean封装到map
+                    map.put(id, bean);
+                    System.out.println(bean);
                 }
             }
         }

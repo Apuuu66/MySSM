@@ -9,6 +9,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class BBB {
     private String name;
 
+    public BBB() {
+        System.out.println("B被创建了");
+    }
+
     public String getName() {
         return name;
     }

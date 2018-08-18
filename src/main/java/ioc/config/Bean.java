@@ -13,6 +13,7 @@ public class Bean {
     private String id;
     // class 是标识符不能做变量名
     private String clazz;
+    private String scope="singleton";
     private List<BeanProperty> properties = new ArrayList<>();
 
     public String getId() {
@@ -29,6 +30,14 @@ public class Bean {
 
     public void setClazz(String clazz) {
         this.clazz = clazz;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 
     public List<BeanProperty> getProperties() {
